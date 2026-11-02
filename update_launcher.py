@@ -146,17 +146,6 @@ def notify_error(text: str):
     print(text, file=sys.stderr)
 
 
-def notify_error(message: str):
-    if sys.platform == 'win32':
-        try:
-            import ctypes
-            ctypes.windll.user32.MessageBoxW(0, message, 'AdventureLand Control Center', 0x10)
-            return
-        except Exception:
-            pass
-    print(message, file=sys.stderr)
-
-
 def start_application(version_dir: Path):
     exe = version_dir / 'AdventureLandControlCenter' / 'AdventureLandControlCenter.exe'
     if not exe.is_file():
@@ -172,13 +161,6 @@ def main() -> int:
         release = json.loads(request_bytes(API, max_bytes=1024*1024))
         tag, zip_url, sha_url = release_assets(release)
         dest = root / 'versions' / tag
-        if current is not None:
-            def nums(v):
-                m = re.match(r'v(\\d+)\\.(\\d+)\\.(\\d+)', v)
-                return tuple(map(int, m.groups()))
-            if nums(current.name) > nums(tag):
-                start_application(current)
-                return 0
         # Never downgrade a newer installed release based on a stale API cache.
         if current is not None:
             def nums(value):

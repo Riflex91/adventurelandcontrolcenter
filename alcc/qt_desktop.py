@@ -16,6 +16,7 @@ from PySide6.QtWebEngineCore import QWebEngineProfile
 from PySide6.QtWebEngineWidgets import QWebEngineView
 
 from .api import ControlAPI
+from .chat_resume import read_chat_url, store_chat_url
 
 # Do NOT expose arbitrary object attributes to untrusted JavaScript.
 API_METHODS = frozenset({
@@ -112,6 +113,7 @@ class ChatHost:
         view=QWebEngineView(self.stack)
         view.setPage(QWebEnginePage(self.profile,view))
         self.stack.addWidget(view)
+        view.urlChanged.connect(lambda next_url: store_chat_url(Path(self.settings.data), next_url.toString()))
         view.setUrl(QUrl(url))
         self.stack.setCurrentWidget(view)
         self.current=ChatHandle(self,view)
@@ -123,7 +125,7 @@ class ChatHost:
             self.stack.setCurrentWidget(self.current.view)
             self.set_visible(True)
             return self.current
-        return self.create_window('ChatGPT',url)
+        return self.create_window('ChatGPT',read_chat_url(Path(self.settings.data)) or url)
 
     def set_visible(self,visible):
         if visible and not self.current:
