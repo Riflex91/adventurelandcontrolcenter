@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+build/
+dist/
+*.spec
+ALCC-fix-backups/
+logs/
+*.zip
+*.rar
+.env
+*.pem
+id_ed25519
+id_rsa
