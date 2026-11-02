@@ -1,4 +1,4 @@
-import io,os,re,subprocess,tarfile,tempfile,unittest
+import io,os,re,subprocess,tarfile,tempfile,unittest,shutil
 from pathlib import Path
 from unittest.mock import patch
 from alcc.core import Settings
@@ -23,9 +23,15 @@ class ProtocolTest(unittest.TestCase):
                 self.pi.deploy(self.name,self.ws.plan(self.name)['plan_sha256'],'DEPLOY '+self.name)
     def test_shell_script_generated_is_valid_bash_and_audited(self):
         logs=[]
+        bash = shutil.which('bash')
+        if os.name == 'nt':
+            git_bash = Path(os.environ.get('ProgramFiles', 'C:/Program Files')) / 'Git' / 'bin' / 'bash.exe'
+            if git_bash.is_file(): bash = str(git_bash)
+            elif not bash: self.skipTest('Bash interpreter not available on Windows CI')
+        if not bash: self.skipTest('Bash interpreter not available')
         def fake_call(body,timeout=30,max_output=0):
             logs.append(body)
-            result=subprocess.run(['bash','-n'],input=(self.pi._vars()+body).encode(),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            result=subprocess.run([bash,'-n'],input=(self.pi._vars()+body).encode(),stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             self.assertEqual(result.returncode,0,result.stderr.decode())
             m=re.search(r'(?m)^id=(alcc-[A-Za-z0-9-]+)',body)
             if m:
