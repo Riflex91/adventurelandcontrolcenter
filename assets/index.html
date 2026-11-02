@@ -1,0 +1,282 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AdventureLand Control Center</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1120;--panel:#111b2b;--panel2:#162236;--border:#29394d;--text:#e7effb;--muted:#91a4ba;--accent:#5ca9ff;--good:#5fcdac;--warning:#ffc475;--danger:#ff8b8b}
+*{box-sizing:border-box}body{margin:0;font:14px/1.55 'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text)}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--border);background:var(--panel2);color:var(--text);padding:10px 14px;border-radius:9px;transition:.15s}button:hover{background:#22344d;border-color:#49709d}button.primary{background:#2069bb;border-color:#3489de;color:white;font-weight:600}button.primary:hover{background:#2878cd}button.danger{border-color:#6c3741;color:#ffc1c1}button:disabled{opacity:.4;cursor:not-allowed}button.small{padding:6px 9px;font-size:12px}label{font-size:12px;color:var(--muted);display:block;margin:0 0 6px}input,textarea,select{width:100%;border:1px solid var(--border);outline:none;color:var(--text);background:#0c1626;border-radius:8px;padding:10px 11px}input:focus,textarea:focus{border-color:var(--accent)}textarea{resize:vertical;min-height:120px;font:13px/1.55 Consolas,monospace}textarea.editor{height:52vh;min-height:340px}.wrap{display:flex;height:100vh;min-height:720px}.side{width:254px;flex-shrink:0;border-right:1px solid var(--border);background:#0e1727;padding:23px 15px;display:flex;flex-direction:column}.brand{padding:4px 12px 27px}.brand .mark{font-size:22px;font-weight:800;letter-spacing:-.4px}.brand .subtitle{font-size:12px;color:var(--muted);margin-top:4px}.nav{display:flex;flex-direction:column;gap:5px}.nav button{border:0;text-align:left;background:transparent;padding:12px 14px;font-weight:500}.nav button.active{background:#1e3450;color:#b6d9ff}.nav .hint{color:#7288a3;font-size:11px;margin-right:12px}.footer{margin-top:auto;border-top:1px solid var(--border);padding:18px 10px 5px;color:var(--muted);font-size:12px}.main{min-width:0;flex:1;overflow-y:auto;padding:33px 38px 48px}.top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:26px}.eyebrow{color:var(--accent);font-size:11px;letter-spacing:1.8px;font-weight:750;text-transform:uppercase}.top h1{margin:4px 0 0;font-size:27px;line-height:1.22;letter-spacing:-.4px}.top .help{color:var(--muted);font-size:12px;max-width:290px;text-align:right}.tab{display:none}.tab.active{display:block}.grid{display:grid;gap:16px}.grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.panel{border:1px solid var(--border);background:var(--panel);padding:21px;border-radius:13px;min-width:0}.panel h2{font-size:16px;margin:0 0 5px}.panel p{color:var(--muted);margin:4px 0 14px}.panel .desc{font-size:12px}.tilehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.kpi{font-size:23px;font-weight:700;margin:8px 0 0;word-break:break-all}.muted{color:var(--muted)}.tiny{font-size:12px}.note{background:#15273b;border-left:3px solid #5383b7;padding:12px 14px;border-radius:6px;font-size:12px;color:#c1d4eb}.note.warning{border-color:var(--warning);background:#2d261e}.actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}.actions.right{justify-content:flex-end}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{margin:0 0 14px}.tag{border:1px solid #365069;color:#b5d4ee;border-radius:99px;font-size:11px;padding:4px 8px}.status-good{color:var(--good)}.status-warn{color:var(--warning)}.status-danger{color:var(--danger)}pre{white-space:pre-wrap;word-break:break-word;background:#0b1422;border:1px solid #24354b;border-radius:9px;padding:15px;font:12px/1.6 Consolas,monospace;overflow:auto;max-height:420px}.spaced{margin-top:18px}.split{display:grid;grid-template-columns:270px minmax(0,1fr);gap:16px}.files{max-height:66vh;overflow:auto}.files button{display:block;width:100%;border:none;text-align:left;background:transparent;font:12px Consolas,monospace;padding:8px 7px;border-radius:5px;overflow-wrap:anywhere}.files button:hover,.files button.selected{background:#203756}.inline{display:flex;gap:9px;align-items:center}.inline>*{min-width:0}.inline select,.inline input{flex:1}.line{border-bottom:1px solid var(--border);padding:10px 0;display:flex;justify-content:space-between;gap:10px}.line:last-child{border-bottom:0}.toast{position:fixed;right:24px;bottom:24px;min-width:290px;max-width:520px;padding:16px 20px;background:#1e3753;border:1px solid #426b9b;border-radius:10px;box-shadow:0 9px 40px #0008;display:none;z-index:30}.toast.error{background:#432831;border-color:#9b4d57}.confirm{background:#0d1726;border:1px solid #40536b;padding:16px;border-radius:10px;margin-top:14px}.wide{width:100%}hr{border:0;border-top:1px solid var(--border);margin:22px 0}.caption{margin-top:12px;color:var(--muted);font-size:11px}.hidden{display:none !important}.pillrow{display:flex;gap:7px;flex-wrap:wrap}.pill{font-size:12px;border:1px solid #3b4f65;padding:5px 8px;border-radius:6px;color:#c6d6eb}
+@media(max-width:1150px){.side{width:205px}.main{padding:25px}.grid.three{grid-template-columns:1fr}.formgrid{grid-template-columns:1fr}}
+
+.mode-switch{display:flex;gap:8px;margin-bottom:12px}
+.mode-switch button{flex:1;font-weight:600}
+.mode-switch button.active{background:#2069bb;color:white;border-color:#3489de}
+body.chat-integrated .side{width:185px;padding:15px 8px}
+body.chat-integrated .main{padding:15px 14px}
+body.chat-integrated .grid.two{grid-template-columns:1fr}
+body.chat-integrated .top .help{display:none}
+body.chat-integrated .panel{padding:13px}
+body.chat-integrated .top h1{font-size:23px}
+.coord-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}.coord-choice{display:flex;flex-direction:column;text-align:left;gap:8px;padding:18px;min-height:118px}.coord-choice strong{font-size:15px}.coord-choice span{font-size:12px;color:var(--muted)}.coord-choice.selected{border-color:#519de9;background:#17375c}.hidden{display:none!important}summary{cursor:pointer;font-weight:600}details.panel[open]>pre{margin-top:12px}@media(max-width:750px){.coord-choice-grid{grid-template-columns:1fr}}</style></head>
+<body><div class="wrap"><aside class="side"><div class="brand"><div class="mark">AL / Control</div><div class="subtitle">AdventureLand Control Center</div></div><nav class="nav">
+<button class="active" data-tab="overview"><span class="hint">01</span>Übersicht</button>
+<button data-tab="chat"><span class="hint">02</span>ChatGPT / Bot</button>
+<button data-tab="coordinator"><span class="hint">03</span>Koordinator / KI</button>
+<button data-tab="editor"><span class="hint">04</span>Bot-Editor</button>
+<button data-tab="deployment"><span class="hint">05</span>SSH / Deployment</button>
+<button data-tab="context"><span class="hint">06</span>Projektkontext</button>
+<button data-tab="settings"><span class="hint">07</span>Einstellungen</button>
+</nav><div class="footer">K1–K7-Gates bleiben wirksam; K8 bleibt separater Kandidat.<br><span id="sys-version">Build 1.2.3 · unbegrenzte Aufträge & Ollama-Aufräumen</span></div></aside>
+<main class="main"><div class="mode-switch"><button data-mode="chat" onclick="go('chat')">ChatGPT / Bot</button><button data-mode="coordinator" onclick="go('coordinator')">Koordinator / KI</button></div><header class="top"><div><div class="eyebrow">AdventureLand / NewBot</div><h1 id="page-title">Übersicht</h1></div><div class="help">Windows 11 · lokale Steuerung · keine automatischen Pi-Änderungen</div></header>
+<section class="tab active" id="tab-overview"><div class="grid three"><div class="panel"><div class="tilehead"><h2>Koordinator</h2><span class="tag">Lokal</span></div><div class="kpi" id="overview-coord">Unbekannt</div><div class="tiny muted">Start bleibt von STOP-Gates abhängig</div></div><div class="panel"><div class="tilehead"><h2>Raspberry Pi</h2><span class="tag">SSH</span></div><div class="kpi" id="overview-pi">Nicht geprüft</div><div class="tiny muted" id="overview-release">Release wird bei Verbindung gelesen</div></div><div class="panel"><div class="tilehead"><h2>Bot-Arbeitsbereiche</h2><span class="tag">Lokal</span></div><div class="kpi" id="overview-workspaces">0</div><div class="tiny muted">Getrennt vom produktiven Bot</div></div></div>
+<div class="panel spaced"><h2>Verbindungs- und Pfaddiagnose</h2><div class="actions"><button onclick="checkEnvironment()">Lokale Pfade prüfen</button><button onclick="piStatus()">SSH / Pi prüfen</button><button onclick="go('settings')">SSH-Einstellungen</button></div><pre id="environment-output" style="max-height:250px">Noch nicht geprüft.</pre></div><div class="grid two spaced"><div class="panel"><h2>Direktaktionen</h2><p>Bestehende Umgebung nutzen, ohne den Koordinator ungeprüft zu entsperren.</p><div class="actions"><button onclick="go('chat')">ChatGPT öffnen</button><button onclick="go('editor')">Bot bearbeiten</button><button onclick="refreshOverview()">Status aktualisieren</button></div></div><div class="panel"><h2>Schutzstatus</h2><div id="stops-summary" class="note warning">Stop-Marker werden gelesen…</div><div class="caption">Manuelle Deployments sind eigenständige Aktionen mit expliziter Prüfung und Freigabe.</div></div></div><div class="panel spaced"><h2>Aktuelles Projektziel</h2><p id="overview-goal"></p><div class="actions"><button onclick="go('context')">Projektkontext öffnen</button><button onclick="go('coordinator')">Koordinator prüfen</button></div></div></section>
+<section class="tab" id="tab-chat"><div class="panel" style="margin-bottom:15px"><div class="tilehead"><h2>Aktuelle Bot-Version vom Raspberry Pi</h2><button class="primary" onclick="syncBot(true,true)">Jetzt synchronisieren</button></div><div id="auto-sync-note" class="note warning" aria-live="polite">Pi-Version noch nicht verifiziert. Synchronisierung startet bei Verbindung.</div><div class="actions spaced"><button class="primary" id="download-current-logs" onclick="downloadCurrentLogs()">Aktuelle Logs herunterladen</button><span id="log-export-status" class="muted" role="status" aria-live="polite">ZIP wird auf dem Windows-Desktop gespeichert.</span></div><div class="caption">Enthält aktuelle Charakter-/Dienst-Logs, aktive Bot-Quelldateien und Release-Metadaten für einen ChatGPT-Auftrag. Keine Pi-Änderung. ZIP vor dem Hochladen auf sensible Inhalte prüfen.</div><div class="actions spaced"><button onclick="copyCurrentBotContext()">Aktuellen Bot-Kontext für ChatGPT vorbereiten</button></div><div class="caption" id="startup-chat-context" aria-live="polite">Der aktuelle Projektstand wird beim Start lokal vorbereitet. ChatGPT.com liest lokale Dateien und frühere Chats nicht automatisch. Kontext einmal mit Strg+V einfügen.</div><pre id="current-context-output" class="hidden" style="max-height:180px"></pre><div class="caption">Automatischer Abgleich beim Programmstart, beim Wechsel in die Bot-Werkstatt und alle 5 Minuten. Lokale Änderungen bleiben erhalten. Offene ChatGPT-Gespräche lesen neue Bot-Dateien nicht automatisch: Den bereitgestellten Kontext bei Bedarf in den Chat einfügen. Kein automatisches Deployment.</div></div><div class="grid two"><div class="panel"><h2>ChatGPT.com – Bot-Werkstatt</h2><p>ChatGPT erscheint rechts als eigener Browserbereich im selben Programmfenster. Anmeldung und Bedienung erfolgen direkt bei ChatGPT.</p><div class="actions"><button class="primary" onclick="chatOpen()">ChatGPT im Programm anzeigen</button><button onclick="apiAction('open_chat_browser')">In Standardbrowser öffnen</button></div><div class="note spaced">Der Control Center kann Inhalte eines ChatGPT-Webchats nicht zuverlässig automatisch auslesen. Wichtige Erkenntnisse müssen deshalb im Projektkontext gespeichert werden.</div></div><div class="panel"><h2>Starte neuen Chat</h2><p>Erstellt die Übergabe, speichert eine Datei, kopiert den Text in die Zwischenablage und öffnet einen neuen Chat.</p><div id="handoff-current-bot" class="note">Für die Übergabe wird automatisch der aktuell synchronisierte Bot verwendet.</div><div class="actions"><button class="primary" onclick="startNewChat()">Starte neuen Chat</button></div><div class="caption">Das alte lokale Fenster wird erst nach deiner Bestätigung geschlossen – niemals der Chat im ChatGPT-Konto gelöscht.</div></div></div><div class="panel spaced"><h2>Übergabe kontrollieren</h2><div id="handoff-pending" class="hidden"><div class="note warning">Prüfe im neuen Chat, ob der Übergabetext eingefügt wurde. Ein eingebetteter Webbrowser darf das nicht eigenmächtig behaupten.</div><pre id="handoff-text" style="max-height:210px"></pre><div class="actions"><button onclick="copyHandoff()">Übergabe erneut kopieren</button><button class="primary" onclick="confirmHandoff()">Übergabe bestätigt – alten Chatbereich schließen</button></div></div><div id="handoff-empty" class="muted">Noch kein Chatwechsel vorbereitet.</div></div></section>
+<section class="tab" id="tab-coordinator">
+  <div class="panel" style="max-width:750px">
+    <h2>Was soll der Koordinator tun?</h2>
+    <p>Wähle eine der beiden Arbeitsweisen. Ollama, Cline und die vorhandenen Sicherheitsprüfungen bleiben unverändert.</p>
+    <div class="coord-choice-grid">
+      <button type="button" id="coord-choice-auto" class="coord-choice selected" onclick="chooseCoordMode('automatic')"><strong>Automatisch weiterarbeiten</strong><span>Der Koordinator wählt die nächste Bot-Aufgabe selbst.</span></button>
+      <button type="button" id="coord-choice-manual" class="coord-choice" onclick="chooseCoordMode('manual')"><strong>Manuelle Aufgabe erteilen</strong><span>Ich beschreibe genau, was die KI am Bot bearbeiten soll.</span></button>
+    </div>
+    <div id="coord-auto-panel" class="spaced">
+      <p>Automatische Entwicklung ohne Sitzungszeitlimit. Bei einer Sicherheits- oder Fehlersperre beendet das Control Center die Sitzung und entlädt das Koordinator-Modell aus Ollama. Ein extern genutzter Ollama-Dienst wird nicht beendet.</p>
+      <button class="primary" onclick="startCoordinatorAutomatic()">Automatisch weiterarbeiten</button>
+    </div>
+    <div id="coord-manual-panel" class="spaced hidden">
+      <label for="coord-task">Dein Auftrag an den Koordinator</label>
+      <textarea id="coord-task" rows="5" maxlength="4000" placeholder="Zum Beispiel: Untersuche, warum Priest und Ranger trotz vorhandener MP-Tränke keine Tränke verwenden. Entwickle und teste die Korrektur."></textarea>
+      <p class="caption">Der Auftrag läuft ohne Gesamtzeitlimit bis zum nachgewiesenen Abschluss, einem Stop oder einer Fehler-/Sicherheitssperre. Einzelne Arbeitsschritte behalten ihre Budgets und Prüfungen. Keine zusätzlichen Rechte oder Deploymentfreigabe.</p>
+      <button class="primary" onclick="startCoordinatorManual()">Aufgabe erteilen und starten</button>
+    </div>
+    <div class="note warning spaced">Bestehende Stop-Marker oder fehlende Freigaben sperren beide Startarten. Das Programm entfernt keine Sperren.</div>
+    <div class="actions spaced"><span class="muted" id="coord-gates">Status wird geprüft …</span><button class="danger" onclick="coordStop()">Koordinator stoppen</button></div>
+  </div>
+  <div class="panel spaced" style="max-width:1000px">
+    <div class="tilehead"><h2>Koordinator / KI – Live-Konsole</h2><span id="coord-live-state" class="tag">Nicht gestartet</span></div>
+    <div class="actions"><button onclick="refreshCoordLogs(true)">Jetzt aktualisieren</button><label style="display:flex;align-items:center;gap:6px;margin:0"><input id="coord-autoscroll" type="checkbox" checked style="width:auto">Automatisch scrollen</label></div>
+    <pre id="coord-output" role="log" aria-label="Koordinator-Prozessausgabe" style="height:410px;max-height:60vh;background:#070e18;color:#c7e7d3;font:12px/1.45 Consolas,monospace;white-space:pre-wrap;overflow:auto">Noch keine Sitzung gestartet.</pre>
+    <div class="caption" id="coord-log-path">Die Live-Konsole zeigt stdout und stderr des vom Control Center gestarteten Prozesses. Das vollständige Protokoll wird lokal gespeichert.</div>
+  </div>
+</section>
+<section class="tab" id="tab-editor"><div class="panel"><div id="editor-sync-note" class="note warning" style="margin-bottom:12px">Aktuelle Pi-Basis noch nicht geprüft.</div><div class="tilehead"><div><h2>Bot-Kandidat / Editor</h2><p class="desc">Nur Dateien im separaten Arbeitsbereich; Änderungen werden lokal versioniert.</p></div><div class="actions"><select id="editor-workspace" class="wsselect" style="width:250px" onchange="loadFileList()"></select><button onclick="loadFileList()">Aktualisieren</button></div></div></div><div class="split spaced"><div class="panel files"><h2>Dateien</h2><div id="file-list" class="muted tiny">Noch kein Arbeitsbereich ausgewählt.</div></div><div class="panel"><div class="tilehead"><h2 id="file-title">Datei auswählen</h2><span id="file-sha" class="muted tiny"></span></div><textarea class="editor" id="source-editor" spellcheck="false" placeholder="Bot-Quellcode"></textarea><div class="actions spaced"><button class="primary" onclick="saveFile()">Datei speichern</button><button onclick="showDiff()">Diff zur Pi-Basis</button><button onclick="showPlan()">Änderungsplan</button></div><pre id="editor-diff" style="max-height:250px">Diff erscheint hier.</pre></div></div></section>
+<section class="tab" id="tab-deployment"><div class="panel" style="margin-bottom:16px;border:2px solid #478ae1"><h2>Ein-Klick: testen und deployen</h2><p>Ein Klick führt Syntax- und vorhandene Funktionstests aus, prüft den Pi-Release und deployt nur bei erfolgreicher Freigabe. Kein Bestätigungscode. Der Pi-Dienst wird bei Erfolg neu gestartet. Die bestehenden Sicherheitsprüfungen und der Rollback bleiben aktiv.</p><div class="actions"><button class="primary" id="one-click-release" style="font-size:17px;padding:15px 24px" onclick="oneClickRelease()">TESTEN &amp; DEPLOYEN</button><span id="one-click-status" role="status" aria-live="polite" class="muted">Bereit</span></div></div><div class="grid two"><div class="panel"><h2>Raspberry Pi</h2><p>SSH mit vorhandenem Schlüssel/ssh-agent. Bekannte Host-Schlüssel werden strikt geprüft.</p><div class="actions"><button onclick="piStatus()">SSH & Dienst prüfen</button><button onclick="piLogs()">Pi-Logs</button><button class="primary" onclick="piPull()">Aktuellen Bot synchronisieren</button></div><pre id="pi-output">Keine Verbindung hergestellt.</pre></div><div class="panel"><h2>Prüfung und Deployment</h2><div class="field"><label>Kandidaten-Arbeitsbereich</label><select class="wsselect" id="deploy-workspace"></select></div><details class="spaced"><summary style="cursor:pointer">Erweiterte Einzelaktionen und Rollback</summary><div class="actions spaced"><button onclick="runTests('syntax')">Syntaxprüfung</button><button onclick="runTests('node')">Node-Tests</button><button onclick="runTests('python')">Python-Tests</button><button onclick="runTests('npm')">npm test</button></div><div class="actions spaced"><button onclick="deployPreview()">Deployment-Vorschau</button><button class="primary" onclick="deployApply()">Nach Freigabe auf Pi übertragen</button><button class="danger" onclick="rollbackApply()">Rollback</button></div></details><div class="note warning spaced">Vor Produktivänderungen werden Testbeleg, Basisrelease, Dateihashes und deine ausdrückliche Bestätigung geprüft. Ein Deployment startet den Dienst neu.</div></div></div><div class="grid two spaced"><div class="panel"><h2>Testprotokoll</h2><pre id="test-output">Noch keine Tests ausgeführt.</pre></div><div class="panel"><h2>Deploymentplan</h2><pre id="deploy-output">Noch kein Plan geprüft.</pre></div></div></section>
+<section class="tab" id="tab-context"><div class="grid two"><div class="panel"><h2>Dauerhafter Projektkontext</h2><div class="field"><label>Aktuelles Ziel</label><input id="ctx-goal" /></div><div class="field"><label>Projektinformationen</label><textarea id="ctx-notes" rows="6"></textarea></div><div class="field"><label>Erkenntnisse aus der aktuellen Chat-Sitzung (nicht automatisch auslesbar)</label><textarea id="ctx-session" rows="6"></textarea></div><div class="actions"><button class="primary" onclick="saveContext()">Kontext sichern</button><button onclick="previewContext()">Übergabevorschau</button></div></div><div class="panel"><h2>Entscheidungen und nächste Schritte</h2><div class="field"><label>Neue dokumentierte Information</label><input id="ctx-item" placeholder="z. B. Test für Priest-MP-Verbrauch ergänzen" /></div><div class="actions"><button onclick="addNote('decision')">Entscheidung</button><button onclick="addNote('completed')">Erledigt</button><button onclick="addNote('todo')">Aufgabe</button></div><pre id="context-history"></pre></div></div><div class="panel spaced"><h2>Kontext- / Übergabevorschau</h2><pre id="context-output">Noch nicht erzeugt.</pre></div></section>
+<section class="tab" id="tab-settings"><div class="panel"><h2>Verzeichnisse und Verbindungen</h2><p>Pfadangaben müssen vollständig sein. SSH-Anmeldung erfolgt über OpenSSH, nicht durch Speichern von Passwörtern.</p><div class="formgrid" id="settings-fields"></div><div class="actions"><button class="primary" onclick="saveSettings()">Einstellungen speichern</button><button onclick="apiAction('open_data_dir')">Lokalen Datenspeicher öffnen</button></div><div class="note spaced">Für den ersten SSH-Zugriff den Pi-Hostschlüssel separat über Windows OpenSSH überprüfen und bestätigen. Die App verwendet anschließend StrictHostKeyChecking=yes.</div></div></section>
+</main></div><div class="toast" id="toast"></div>
+<script>
+let app={coordMode:'automatic',sync:null,syncPending:null,syncAt:0,originalFileText:null,editorWorkspace:null,boot:null, workspace:'',selectedFile:'',sha:'',handoff:null,deployPlan:null,prompt:'',coordConsole:{run:null,cursor:0,busy:false}};
+const $=(id)=>document.getElementById(id);
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function format(x){return JSON.stringify(x,null,2)};
+function toast(message,error=false){let el=$('toast');el.textContent=message;el.className='toast'+(error?' error':'');el.style.display='block';setTimeout(()=>{el.style.display='none'},6000)}
+async function call(method,...args){if(!window.pywebview?.api)throw Error('Desktop-Verbindung nicht bereit.');try{return await window.pywebview.api[method](...args)}catch(e){throw Error(e.message||String(e))}}
+async function work(fn){try{document.body.style.cursor='progress';return await fn()}catch(e){toast(e.message,true);throw e}finally{document.body.style.cursor=''}}
+async function apiAction(method,...args){return work(async()=>{let r=await call(method,...args);toast(format(r).slice(0,400));return r})}
+function go(tab){document.body.classList.toggle('chat-integrated',tab==='chat');document.querySelectorAll('.mode-switch button').forEach(b=>b.classList.toggle('active',b.dataset.mode===tab));if(window.pywebview?.api?.set_chat_visible){call('set_chat_visible',tab==='chat').catch(e=>toast(e.message,true))}document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));document.querySelectorAll('.tab').forEach(e=>e.classList.toggle('active',e.id==='tab-'+tab));$('page-title').textContent=({overview:'Übersicht',chat:'ChatGPT / Bot',coordinator:'Koordinator / KI',editor:'Bot-Editor',deployment:'SSH / Deployment',context:'Projektkontext',settings:'Einstellungen'})[tab]||tab;if(tab==='chat'||tab==='editor')syncBot(false,false).then(()=>{if(tab==='editor')loadFileList()}).catch(()=>{});if(tab==='coordinator')refreshCoordLogs()}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.tab)));
+function fillWorkspaces(ws){let html='<option value="">– auswählen –</option>'+ws.map(x=>'<option value="'+escapeHtml(x.name)+'">'+escapeHtml(x.name)+'</option>').join('');document.querySelectorAll('.wsselect').forEach(s=>{let old=s.value;s.innerHTML=html;if(ws.some(x=>x.name===old))s.value=old;else if(ws.length)s.value=ws[0].name});$('overview-workspaces').textContent=ws.length}
+async function reloadWorkspaces(){let ws=await call('list_workspaces');fillWorkspaces(ws)}
+async function refreshOverview(){await work(async()=>{let x=await call('bootstrap');app.boot=x;fillWorkspaces(x.workspaces);$('overview-goal').textContent=x.project.goal||'Nicht festgelegt';$('overview-coord').textContent=x.coordinator_running?'Läuft':'Prozess nicht aktiv';$('overview-pi').textContent='SSH: '+x.settings.ssh_host;let stops=x.stop_markers;$('stops-summary').textContent=Object.entries(stops).map(([k,v])=>k+': '+(v?'gesetzt':'nicht gesetzt')).join(' · ');renderContext(x.project);renderSettings(x.settings);let d=await call('environment_check');$('environment-output').textContent=format(d);if(!d.coordinator.found)$('overview-coord').textContent='Pfad prüfen';});syncBot(false,false).catch(()=>{})}
+function editorHasUnsavedText(){return app.originalFileText!==null && $('source-editor').value!==app.originalFileText}
+function showSyncResult(info){
+  app.sync=info;
+  const good=!!info?.verified_now;
+  const shortRelease=good?(info.release.split('/').pop()):'';
+  const message=good?('Pi-Basis geprüft: '+shortRelease+' · Arbeitsbereich '+info.workspace+(info.created?' (neue Kopie)':' (wiederverwendet)')+(info.release_changed?' · Neuer Pi-Release erkannt; alte Kandidaten behalten. Aktualisierten Kontext in ChatGPT übernehmen!':'')+(info.candidate_changed_count?' · '+info.candidate_changed_count+' lokale Änderung(en) vorhanden':'')):
+      ('Aktualität NICHT bestätigt: '+(info.error||info.note||'SSH nicht erreichbar')+'. Alten Arbeitsbereich nicht als aktuellen Bot behandeln.');
+  $('auto-sync-note').textContent=message;$('editor-sync-note').textContent=message;
+  $('auto-sync-note').className='note'+(good?'':' warning');$('editor-sync-note').className='note'+(good?'':' warning');
+  if(!good){$('handoff-current-bot').textContent='Kein aktuell bestätigter Bot – Chatwechsel bis zur nächsten erfolgreichen Synchronisierung gesperrt.';return;}
+  $('overview-pi').textContent='SSH OK / '+info.service;
+  $('overview-release').textContent=info.release;
+  $('deploy-workspace').value=info.workspace;
+  $('handoff-current-bot').textContent='Aktuelle Pi-Basis: '+shortRelease+' · '+info.workspace;
+  const editor=$('editor-workspace');
+  if(editor.value!==info.workspace){
+    if(editorHasUnsavedText()){
+      $('editor-sync-note').textContent+=' · ACHTUNG: Im Editor sind ungespeicherte Änderungen einer alten Basis. Bitte sichern oder verwerfen und anschließend die aktuelle Basis auswählen.';
+    }else{
+      editor.value=info.workspace;app.selectedFile='';app.editorWorkspace=null;app.originalFileText=null;app.sha='';
+      $('source-editor').value='';$('file-title').textContent='Datei auswählen';$('file-sha').textContent='';$('file-list').textContent='Aktuelle Basis ausgewählt – Dateien laden.';
+    }
+  }
+}
+async function syncBot(forceCheck=false,showToast=false){
+  if(app.syncPending)return app.syncPending;
+  if(!forceCheck && app.sync?.verified_now && Date.now()-app.syncAt<60000)return app.sync;
+  app.syncPending=(async()=>{
+    try{
+      const info=await call('sync_bot',false); // normal refresh: no redundant snapshot if same release
+      if(info.status==='in_progress')return {verified_now:false,status:'in_progress',note:'Synchronisierung läuft noch; Aktualität nicht erneut bestätigt.'};
+      app.syncAt=Date.now();
+      await reloadWorkspaces();showSyncResult(info);
+      if(showToast)toast(info.created?'Aktueller Bot wurde geladen':'Pi-Basis bereits aktuell');
+      return info;
+    }catch(e){
+      app.syncAt=0;
+      const error={verified_now:false,status:'stale',error:e.message||String(e)};
+      showSyncResult(error);
+      if(showToast)toast('Pi-Synchronisierung fehlgeschlagen: '+error.error,true);
+      return error;
+    }finally{app.syncPending=null}
+  })();
+  return app.syncPending;
+}
+async function downloadCurrentLogs(){
+  const btn=$('download-current-logs'), status=$('log-export-status');
+  if(btn.disabled)return;
+  btn.disabled=true;
+  status.textContent='Aktuelle Logs werden vom Pi gelesen und als ZIP erstellt…';
+  try{
+    const result=await call('export_logs_desktop');
+    status.textContent='ZIP gespeichert: '+result.path+' ('+result.files+' Dateien)';
+    toast('Logs und Bot-Quellen als ZIP auf Desktop gespeichert.');
+  }catch(e){
+    status.textContent='Export fehlgeschlagen: '+e.message;
+    toast(status.textContent,true);
+  }finally{btn.disabled=false;}
+}
+async function prepareStartupChatContext(){
+  // Reading/sync is independent of cloud ChatGPT; the user decides whether
+  // to send the copied briefing to the chatgpt.com browser.
+  const result=await syncBot(true,false);
+  const workspace=result?.verified_now ? result.workspace : '';
+  try{
+    const data=await call('prepare_chat_context',workspace);
+    const notice=$('startup-chat-context');
+    notice.textContent=data.copied
+      ? 'Projektkontext liegt bereit in der Zwischenablage. In ChatGPT einmal Strg+V drücken und absenden.'
+      : 'Kontextdatei lokal erzeugt: '+data.path+'; kopiere sie bei Bedarf manuell in ChatGPT.';
+  }catch(e){$('startup-chat-context').textContent='Projektkontext konnte nicht automatisch vorbereitet werden: '+e.message;}
+}
+async function copyCurrentBotContext(){
+  const synced=await syncBot(true,false);
+  if(!synced?.verified_now){toast('Aktueller Pi-Stand nicht bestätigt; Kontext nicht ausgegeben.',true);return}
+  try{
+    const data=await call('project_prompt',synced.workspace);
+    const box=$('current-context-output');box.textContent=data.prompt;box.classList.remove('hidden');
+    try{await navigator.clipboard.writeText(data.prompt);toast('Aktueller Bot-Kontext kopiert – bitte in ChatGPT einfügen.');}
+    catch(_){toast('Kontext ist unten sichtbar. Bitte manuell kopieren.');}
+  }catch(e){toast('Kontextvorbereitung fehlgeschlagen: '+e.message,true)}
+}
+async function piStatus(){return work(async()=>{try{let r=await call('pi_status');$('pi-output').textContent=format(r);$('overview-pi').textContent='SSH OK / '+r.service;$('overview-release').textContent=r.release||'–';$('environment-output').textContent=format(r);return r}catch(e){$('overview-pi').textContent='SSH nicht bestätigt';$('pi-output').textContent='SSH-Fehler: '+e.message;$('environment-output').textContent='SSH-Fehler: '+e.message+'\n'+(e.message.includes('NO_RELEASES_DIR')?'SSH-Befehl hat den Pi erreicht. Prüfe unter Einstellungen den Pi-Release-Ordner: adventureland-headless/CODE/newbot-coordinator':'Zum erstmaligen Fingerprint-Abgleich in PowerShell: ssh riflex@192.168.178.134');return {reachable:false,error:e.message}}})}
+async function checkEnvironment(){return work(async()=>{let d=await call('environment_check');$('environment-output').textContent=format(d);$('overview-coord').textContent=d.coordinator.found?(d.coordinator.control_center_process_running?'Läuft':'Erkannt / nicht gestartet'):'Pfad nicht gefunden';return d})}
+async function piLogs(){await work(async()=>{$('pi-output').textContent=(await call('pi_logs')).output})}
+async function piPull(){await syncBot(true,true)}
+async function coordCmd(command){await work(async()=>{let r=await call('coord_action',command);$('coord-output').textContent=format(r);if(r.stop_markers)$('coord-gates').textContent=format(r.stop_markers);await refreshOverview()})}
+function chooseCoordMode(mode){
+  if(!['automatic','manual'].includes(mode))return;
+  app.coordMode=mode;
+  $('coord-choice-auto').classList.toggle('selected',mode==='automatic');
+  $('coord-choice-manual').classList.toggle('selected',mode==='manual');
+  $('coord-auto-panel').classList.toggle('hidden',mode!=='automatic');
+  $('coord-manual-panel').classList.toggle('hidden',mode!=='manual');
+}
+async function startCoordinatorAutomatic(){
+  const fresh=await syncBot(true,false);
+  if(!fresh?.verified_now)return toast('Pi-Basis nicht bestätigt. Kein Koordinatorstart.',true);
+  if(!confirm('Koordinator OHNE Sitzungszeitlimit automatisch arbeiten lassen? Er läuft bis zum Stoppen oder einer Schutzsperre. Aufgabenbudgets und STOP-Gates gelten weiter.'))return;
+  await work(async()=>{
+    let r=await call('coord_auto','START AUTO SESSION');
+    resetCoordConsole();$('coord-gates').textContent='Automatischer Dauerbetrieb gestartet (kein Sitzungszeitlimit).';
+    await refreshCoordLogs();toast('Automatischer Dauerbetrieb gestartet');
+  }).catch(()=>{});
+}
+async function startCoordinatorManual(){
+  const task=$('coord-task').value.trim();
+  if(!task)return toast('Bitte zuerst eine konkrete Aufgabe eingeben.',true);
+  if(task.length>4000)return toast('Auftrag ist zu lang (max. 4000 Zeichen).',true);
+  const fresh=await syncBot(true,false);
+  if(!fresh?.verified_now)return toast('Pi-Basis nicht bestätigt. Kein Koordinatorstart.',true);
+  if(!confirm('Diesen Auftrag an den Koordinator geben und ohne Sitzungszeitlimit bis zum Abschluss bearbeiten lassen? Bestehende STOP-Sperren gelten weiter.'))return;
+  await work(async()=>{
+    let r=await call('coord_manual',task,'START MANUAL TASK');
+    resetCoordConsole();$('coord-gates').textContent='Bedienerauftrag läuft (ohne Sitzungszeitlimit).';
+    await refreshCoordLogs();toast('Manuelle Aufgabe an den Koordinator übergeben');
+  }).catch(()=>{});
+}
+async function coordStop(){if(!confirm('STOP-Marker durch offizielle Koordinator-CLI setzen?'))return;await work(async()=>{await call('coord_stop');await refreshCoordLogs();await refreshOverview()})}
+function resetCoordConsole(){app.coordConsole={run:null,cursor:0,busy:false};$('coord-output').textContent='';}
+async function refreshCoordLogs(showErrors=false){
+  if(app.coordConsole.busy)return;
+  app.coordConsole.busy=true;
+  try{
+    let state=app.coordConsole;
+    let r=await call('coord_output',state.cursor);
+    const view=$('coord-output');
+    if(r.run_id!==state.run){resetCoordConsole();state=app.coordConsole;state.run=r.run_id;r=await call('coord_output',0);}
+    const keepScroll=$('coord-autoscroll').checked || view.scrollTop+view.clientHeight>=view.scrollHeight-30;
+    if(r.truncated){view.textContent+='\n[Ältere Ausgaben sind nur noch in der lokalen Logdatei verfügbar.]\n';}
+    if(r.lines?.length){view.textContent+=(view.textContent?'\n':'')+r.lines.join('\n');}
+    state.cursor=r.sequence||0;
+    // Prevent unlimited DOM growth; the persistent local file contains the full log.
+    if(view.textContent.length>300000)view.textContent='[Ältere Zeilen siehe lokale Logdatei.]\n'+view.textContent.slice(-210000);
+    if(keepScroll)view.scrollTop=view.scrollHeight;
+    let stops=Object.entries(r.stop_markers||{}).filter(([name,active])=>active).map(([name])=>name);
+    $('coord-gates').textContent=stops.length?'Start gesperrt: '+stops.join(', '):(r.running?'Koordinator läuft':'Bereit (weitere Koordinatorprüfungen gelten weiterhin)');
+    $('coord-live-state').textContent=r.running?'LÄUFT':r.exit_code!==null?'Beendet (Code '+r.exit_code+')':'Nicht gestartet';
+    $('coord-log-path').textContent=r.log_path?'Lokales Protokoll: '+r.log_path:'Noch keine lokale Prozess-Logdatei.';
+  }catch(e){if(showErrors)toast('Live-Ausgabe nicht verfügbar: '+e.message,true)}
+  finally{app.coordConsole.busy=false}
+}
+async function chatOpen(){await work(async()=>{let r=await call('open_chat');toast(r.opened==='embedded'?'ChatGPT im Programm sichtbar':r.note||'Browser geöffnet')})}
+async function startNewChat(){let synced=await syncBot(true,false);if(!synced?.verified_now){toast('Neuer Chat gesperrt: Pi-Basis nicht aktuell bestätigt.',true);return}await work(async()=>{await saveContext(false);let r=await call('new_chat');app.handoff=r;app.prompt=r.prompt||'';$('handoff-text').textContent=r.prompt||'';$('handoff-pending').classList.remove('hidden');$('handoff-empty').classList.add('hidden');toast(r.opened?'Neuer Chat geöffnet. Übergabe einfügen und dann bestätigen.':'Neuer Chat konnte nicht geöffnet werden.',!r.opened)})}
+async function copyHandoff(){if(navigator.clipboard){try{await navigator.clipboard.writeText(app.prompt);toast('Übergabetext kopiert');return}catch(e){}}toast('Zwischenablagezugriff nicht möglich. Text aus der Vorschau kopieren.',true)}
+async function confirmHandoff(){if(!app.handoff||!app.handoff.opened)return;if(!confirm('Ist die Übergabe tatsächlich im NEUEN Chat angekommen und dort sichtbar?'))return;await work(async()=>{let r=await call('confirm_new_chat',app.handoff.handoff_id);$('handoff-text').textContent=format(r);$('handoff-pending').classList.add('hidden');$('handoff-empty').classList.remove('hidden');app.handoff=null;toast('Übergabe bestätigt; altes lokales Fenster geschlossen, soweit eingebettet.')})}
+async function loadFileList(){let w=$('editor-workspace').value;if(!w)return;await work(async()=>{let files=await call('list_files',w);$('file-list').innerHTML=files.map(f=>'<button data-path="'+escapeHtml(f.path)+'">'+escapeHtml(f.path)+'</button>').join('');$('file-list').querySelectorAll('button').forEach(el=>el.addEventListener('click',()=>openFile(w,el.dataset.path)));toast(files.length+' Dateien im Kandidaten')})}
+async function openFile(w,p){await work(async()=>{let r=await call('read_file',w,p);app.selectedFile=p;app.editorWorkspace=w;app.originalFileText=r.text;app.sha=r.sha256;$('file-title').textContent=p;$('file-sha').textContent=r.sha256.slice(0,12);$('source-editor').value=r.text;$('editor-diff').textContent='Diff noch nicht geladen.';document.querySelectorAll('#file-list button').forEach(e=>e.classList.toggle('selected',e.dataset.path===p))})}
+async function saveFile(){let w=$('editor-workspace').value;if(!w||!app.selectedFile)return toast('Datei auswählen',true);await work(async()=>{let r=await call('save_file',w,app.selectedFile,$('source-editor').value,app.sha);app.sha=r.sha256;app.originalFileText=$('source-editor').value;$('file-sha').textContent=r.sha256.slice(0,12);toast('Kandidat gespeichert; alte Testbelege sind für neue Änderungen nicht gültig.')})}
+async function showDiff(){if(!app.selectedFile)return;await work(async()=>{$('editor-diff').textContent=(await call('file_diff',$('editor-workspace').value,app.selectedFile)).diff||'(Keine Änderungen)'})}
+async function showPlan(){await work(async()=>{$('editor-diff').textContent=format(await call('validate_workspace',$('editor-workspace').value))})}
+async function oneClickRelease(){
+  const w=$('deploy-workspace').value;
+  if(!w){toast('Kandidaten-Arbeitsbereich auswählen',true);return;}
+  const btn=$('one-click-release'), status=$('one-click-status');
+  if(btn.disabled)return;
+  btn.disabled=true;status.textContent='Prüfung und ggf. Deployment laufen…';
+  $('test-output').textContent='Syntax- und Funktionstests laufen…';
+  $('deploy-output').textContent='Prüfung des Release- und Deploymentstatus läuft…';
+  try{
+    const r=await call('one_click_release',w);
+    $('test-output').textContent=format(r.tests||[]);
+    $('deploy-output').textContent=format(r);
+    if(r.ok&&r.deployed){status.textContent='Deployment erfolgreich: '+r.new_release;toast('Bot installiert: '+r.new_release);}
+    else{status.textContent='ABGEBROCHEN bei '+r.stage+': '+r.error;toast(status.textContent,true);}
+  }catch(e){status.textContent='Fehler: '+e.message;toast(status.textContent,true);}
+  finally{btn.disabled=false;}
+}
+async function runTests(mode){let w=$('deploy-workspace').value;if(!w)return toast('Arbeitsbereich auswählen',true);let reason=mode==='syntax'?'statische Syntaxprüfung':'lokale Ausführung von Testcode aus dem Kandidaten';if(prompt('Für '+reason+' genau TEST '+w+' eingeben:')!=='TEST '+w)return;await work(async()=>{let r=await call('test_candidate',w,mode,'TEST '+w);$('test-output').textContent=format({passed:r.passed,eligible_for_deploy:r.eligible_for_deploy,mode:r.mode,checked:r.checked})+'\n\n'+r.output;toast(r.passed?'Testlauf abgeschlossen':'Testlauf fehlgeschlagen',!r.passed)})}
+async function deployPreview(){let w=$('deploy-workspace').value;if(!w)return toast('Arbeitsbereich auswählen',true);await work(async()=>{let p=await call('deploy_preview',w);app.deployPlan=p;$('deploy-output').textContent=format(p);toast(p.deploy_eligible?'Deployment bereit zur manuellen Freigabe':'Deployment gesperrt – Prüfergebnis beachten',!p.deploy_eligible)})}
+async function deployApply(){let w=$('deploy-workspace').value;if(!w)return toast('Arbeitsbereich auswählen',true);await work(async()=>{let p=await call('deploy_preview',w);$('deploy-output').textContent=format(p);if(!p.deploy_eligible)return toast('Deployment-Checks nicht bestanden',true);let phrase='DEPLOY '+w;if(prompt('ACHTUNG: Dienstneustart auf dem Pi! Für Freigabe genau '+phrase+' eingeben:')!==phrase)return;let r=await call('deploy_apply',w,p.plan_sha256,phrase);$('deploy-output').textContent=format(r);toast('Deployment erfolgreich: '+r.new_release)})}
+async function rollbackApply(){let w=$('deploy-workspace').value;if(!w)return;let phrase='ROLLBACK '+w;if(prompt('Vorherigen Release aktivieren und Pi-Dienst neu starten? Genau '+phrase+' eingeben:')!==phrase)return;await work(async()=>{let r=await call('deploy_rollback',w,phrase);$('deploy-output').textContent=format(r);toast('Rollback ausgeführt')})}
+function renderContext(p){$('ctx-goal').value=p.goal||'';$('ctx-notes').value=p.notes||'';$('ctx-session').value=p.session_notes||'';$('context-history').textContent=['Entscheidungen:',''+(p.decisions||[]).map(x=>'- '+x.text).join('\n'),'','Erledigt:',...(p.completed||[]).map(x=>'- '+x.text),'','Offen:',...(p.todo||[]).map(x=>'- '+x.text)].join('\n')}
+async function saveContext(show=true){let r=await call('project_update',{goal:$('ctx-goal').value,notes:$('ctx-notes').value,session_notes:$('ctx-session').value});if(show)toast('Projektkontext dauerhaft gespeichert');return r}
+async function addNote(kind){let text=$('ctx-item').value.trim();if(!text)return;await work(async()=>{let p=await call('project_note',kind,text);$('ctx-item').value='';renderContext(p);toast('Notiz gespeichert')})}
+async function previewContext(){let synced=await syncBot(true,false);if(!synced?.verified_now){toast('Kontextvorschau gesperrt: aktuelle Pi-Basis nicht bestätigt',true);return}await work(async()=>{await saveContext(false);$('context-output').textContent=(await call('project_prompt',synced.workspace)).prompt})}
+const settingsLabels={coordinator_dir:'Koordinator-Pfad',bot_repo_dir:'NewBot-Repository',workspace_dir:'Arbeitsbereiche',ssh_host:'Pi-Adresse',ssh_user:'SSH-Benutzer',ssh_key:'SSH-Schlüsseldatei (optional)',remote_root:'Pi-Release-Ordner relativ zum Home',service:'systemd-Service',chat_url:'ChatGPT-Projektlink (https://chatgpt.com/...)',python_exe:'Python-Programm',node_exe:'Node-Programm'};
+function renderSettings(values){$('settings-fields').innerHTML=Object.entries(settingsLabels).map(([key,label])=>'<div class="field"><label>'+escapeHtml(label)+'</label><input data-key="'+key+'" value="'+escapeHtml(values[key]||'')+'"></div>').join('')}
+async function saveSettings(){let vals={};$('settings-fields').querySelectorAll('input').forEach(e=>vals[e.dataset.key]=e.value);await work(async()=>{let r=await call('save_settings',vals);toast('Einstellungen gespeichert');await refreshOverview()})}
+window.addEventListener('pywebviewready',()=>{refreshOverview().then(()=>prepareStartupChatContext()).catch(e=>toast(e.message,true));go('chat');});
+// Poll only for release changes, never deploy or restart anything automatically.
+setInterval(()=>{if(window.pywebview?.api)syncBot(true,false).catch(()=>{})},300000);
+// Poll the local coordinator console only when tab 03 is visible; never start/stop here.
+setInterval(()=>{if(document.getElementById('tab-coordinator')?.classList.contains('active') && window.pywebview?.api)refreshCoordLogs()},1200);
+</script>
+<script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+<script>
+if(window.qt && window.qt.webChannelTransport && window.QWebChannel){
+  new QWebChannel(window.qt.webChannelTransport, function(channel){
+    const native = channel.objects.alccBridge;
+    const pending = new Map();let counter=0;
+    native.resultReady.connect(function(id, raw){
+      const cb=pending.get(id);if(!cb)return;pending.delete(id);
+      try{const result=JSON.parse(raw);if(result.ok)cb.resolve(result.value);else cb.reject(new Error(result.error||'API-Fehler'))}
+      catch(error){cb.reject(error)}
+    });
+    window.pywebview={api:new Proxy({}, {get:(_target,method)=> (...args)=> new Promise((resolve,reject)=>{
+      const id=String(++counter);pending.set(id,{resolve,reject});
+      native.invoke(id,String(method),JSON.stringify(args));
+    })})};
+    window.dispatchEvent(new Event('pywebviewready'));
+  });
+}
+</script>
+</body></html>

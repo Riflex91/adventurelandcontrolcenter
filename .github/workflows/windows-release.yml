@@ -1,0 +1,53 @@
+name: Windows EXE / Release
+on:
+  pull_request:
+  push:
+    branches: [main]
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt "pyinstaller>=6.10,<7"
+      - name: Run tests
+        run: python -B -m unittest discover -s tests -p "test*.py" -v
+      - name: Build Control Center EXE
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --windowed --onedir --name AdventureLandControlCenter --add-data "assets;assets" --collect-all PySide6 app.py
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+      - name: Build auto-updating launcher EXE
+        shell: pwsh
+        run: |
+          python -m PyInstaller --noconfirm --clean --windowed --onefile --name AdventureLandControlCenter-Start update_launcher.py
+          if ($LASTEXITCODE -ne 0) { exit 1 }
+      - name: Pack application and checksum
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Path release -Force | Out-Null
+          Compress-Archive -Path dist/AdventureLandControlCenter -DestinationPath release/AdventureLandControlCenter-windows-x64.zip
+          $f='release/AdventureLandControlCenter-windows-x64.zip'
+          $hash=(Get-FileHash -Path $f -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  AdventureLandControlCenter-windows-x64.zip" | Set-Content -Path "$f.sha256" -Encoding ascii
+          Copy-Item dist/AdventureLandControlCenter-Start.exe release/AdventureLandControlCenter-Start.exe
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AdventureLandControlCenter-Windows
+          path: release/*
+      - name: Publish release assets (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          gh release create "${{ github.ref_name }}" release/* --title "AdventureLand Control Center ${{ github.ref_name }}" --notes "Windows Control Center with versioned self-update launcher." --verify-tag
